@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
@@ -41,47 +42,35 @@ public class Creating_Project {
     }
 
     @Test
-    public void prihlasenie_rukovoditel() {
-        driver.get(url);
-        WebElement searchInput = driver.findElement(By.name("username"));
-        searchInput.sendKeys("rukovoditel");
-        searchInput = driver.findElement(By.name("password"));
-        searchInput.sendKeys("vse456ru");
-        searchInput.sendKeys(Keys.ENTER);
-        Assert.assertTrue(driver.getTitle().startsWith("Rukovoditel | Dashboard"));
-        driver.quit();
-    }
-
-
-    @Test
-    public void prihlasenie_failed_rukovoditel() {
-        driver.get(url);
-        WebElement searchInput = driver.findElement(By.name("username"));
-        searchInput.sendKeys("Login");
-        searchInput = driver.findElement(By.name("password"));
-        searchInput.sendKeys("vse456ru");
-        searchInput.sendKeys(Keys.ENTER);
-        Assert.assertTrue(!driver.getTitle().startsWith("Rukovoditel | Dashboard"));
-        driver.quit();
-    }
-
-
-    @Test
-    public void odhlasenie_rukovoditel() {
-        driver.get(url);
-        WebElement searchInput = driver.findElement(By.name("username"));
-        searchInput.sendKeys("Rukovoditel");
-        searchInput = driver.findElement(By.name("password"));
-        searchInput.sendKeys("vse456ru");
-        searchInput.sendKeys(Keys.ENTER);
+    public void novy_projekt_failed() {
+        Metody.prihlasenie(driver);
+        driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
+        driver.findElement(By.cssSelector(".btn-primary")).click();
         WebDriverWait wait = new WebDriverWait(driver, 2);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa-angle-down")));
-        driver.findElement(By.cssSelector(".fa-angle-down")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn-primary-modal-action")));
+        driver.findElement(By.cssSelector(".btn-primary-modal-action")).click();
         wait = new WebDriverWait(driver, 2);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Logoff")));
-        driver.findElement(By.linkText("Logoff")).click();
-        driver.quit();
-
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_158-error")));
+        Assert.assertTrue(driver.findElement(By.id("fields_158-error")).isDisplayed());
     }
+
+
+    @Test
+    public void novy_projekt_passed() {
+        Metody.prihlasenie(driver);
+        driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
+        driver.findElement(By.cssSelector(".btn-primary")).click();
+        driver.findElement(By.id("fields_158")).click();
+        Select select = new Select(driver.findElement(By.id("fields_156")));
+        select.selectByIndex(1);
+        WebElement searchInput = driver.findElement(By.id("fields_158"));
+        searchInput.sendKeys("smea01");
+        WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(".btn-primary-modal-action")));
+        driver.findElement(By.cssSelector(".btn-primary-modal-action")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("smea01")));
+        driver.findElement(By.linkText("smea01")).click();
+        Assert.assertTrue(driver.getTitle().startsWith("Rukovoditel | Tasks"));
+    }
+
 }
