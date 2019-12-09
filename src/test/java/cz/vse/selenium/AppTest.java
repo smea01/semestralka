@@ -57,4 +57,17 @@ public class AppTest {
         Assert.assertTrue(driver.getTitle().startsWith("Rukovoditel | Dashboard"));
         driver.quit();
     }
+
+
+    @Test
+    public void prihlasenie_failed_rukovoditel() {
+        driver.get(url);
+        WebElement searchInput = driver.findElement(By.name("username"));
+        searchInput.sendKeys("Login");
+        searchInput = driver.findElement(By.name("password"));
+        searchInput.sendKeys("vse456ru");
+        searchInput.sendKeys(Keys.ENTER);
+        Assert.assertTrue(!driver.getTitle().startsWith("Rukovoditel | Dashboard"));
+        driver.quit();
+    }
 }
