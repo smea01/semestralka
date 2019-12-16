@@ -9,6 +9,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 
@@ -23,5 +26,23 @@ public class Metody {
         searchInput = driver.findElement(By.name("password"));
         searchInput.sendKeys("vse456ru");
         searchInput.sendKeys(Keys.ENTER);
+    }
+
+    public static void novyProjekt(ChromeDriver driver) {
+    driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
+        driver.findElement(By.cssSelector(".btn-primary")).click();
+
+    WebDriverWait wait = new WebDriverWait(driver, 4);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_158")));
+
+    WebElement searchInput = driver.findElement(By.id("fields_158"));
+        searchInput.sendKeys("smea01");
+        driver.findElement(By.id("fields_156"));
+    Select select = new Select(driver.findElement(By.id("fields_156")));
+        select.selectByIndex(1);
+
+        driver.findElement(By.id("fields_159")).click();
+        driver.findElement(By.cssSelector("td[class='active day']")).click();
+        driver.findElement(By.className("btn-primary-modal-action")).click();
     }
 }
