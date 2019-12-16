@@ -60,17 +60,38 @@ public class Creating_Project {
         Metody.prihlasenie(driver);
         driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
         driver.findElement(By.cssSelector(".btn-primary")).click();
-        driver.findElement(By.id("fields_158")).click();
-        Select select = new Select(driver.findElement(By.id("fields_156")));
-        select.selectByIndex(1);
+
+        WebDriverWait wait = new WebDriverWait(driver, 4);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_158")));
+
         WebElement searchInput = driver.findElement(By.id("fields_158"));
         searchInput.sendKeys("smea01");
-        WebDriverWait wait = new WebDriverWait(driver, 2);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(".btn-primary-modal-action")));
-        driver.findElement(By.cssSelector(".btn-primary-modal-action")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("smea01")));
-        driver.findElement(By.linkText("smea01")).click();
-        Assert.assertTrue(driver.getTitle().startsWith("Rukovoditel | Tasks"));
+        driver.findElement(By.id("fields_156"));
+        Select select = new Select(driver.findElement(By.id("fields_156")));
+        select.selectByIndex(1);
+
+        driver.findElement(By.id("fields_159")).click();
+        driver.findElement(By.cssSelector("td[class='active day']")).click();
+        driver.findElement(By.className("btn-primary-modal-action")).click();
+
+        driver.findElement(By.xpath("//a[contains(text(),'smea01')]")).click();
+        driver.findElement(By.cssSelector(".btn-default:nth-child(1)")).click();
+        driver.findElement(By.cssSelector(".btn-default:nth-child(1)")).click();
+
+        wait = new WebDriverWait(driver, 4);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn-group li:nth-child(2) > a")));
+        driver.findElement(By.cssSelector(".btn-group li:nth-child(2) > a")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("uniform-delete_confirm")));
+        driver.findElement(By.id("delete_confirm")).click();
+
+        wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn:nth-child(3)")));
+        driver.findElement(By.cssSelector(".btn:nth-child(3)")).click();
+
+
+
+
     }
 
 }
