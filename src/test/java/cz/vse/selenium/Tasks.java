@@ -14,9 +14,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,13 +33,11 @@ public class Tasks {
         cho.addArguments("window-size=1200,1100");
         cho.addArguments("--disable-gpu");
         cho.addArguments("--disable-extensions");
-        //driver = new ChromeDriver(cho);
         driver.manage().window().maximize();
     }
 
     @After
     public void tearDown() {
-//        driver.close();
     }
 
     @Test
@@ -70,6 +65,31 @@ public class Tasks {
         driver.switchTo().defaultContent();
         driver.findElement(By.className("btn-primary-modal-action")).click();
 
+        wait = new WebDriverWait(driver, 1);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
+        List<WebElement> zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        List<WebElement> bunka = zlozka.get(1).findElements(By.tagName("td"));
+        List<WebElement> obsah_bunky = bunka.get(1).findElements(By.tagName("a"));
+        obsah_bunky.get(2).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-bordered table-hover table-item-details'] tr")));
+        zlozka = driver.findElements(By.cssSelector("[class='table table-bordered table-hover table-item-details'] tr"));
+
+        WebElement nazov = driver.findElement(By.className("caption"));
+        Assert.assertEquals("smea01_task", nazov.getText());
+        WebElement popis = driver.findElement(By.className("fieldtype_textarea_wysiwyg"));
+        Assert.assertEquals("Popis", popis.getText());
+
+        //kontrola typ - Task, status - new, priorita - medium
+        bunka = zlozka.get(3).findElements(By.tagName("td"));
+        obsah_bunky = bunka.get(0).findElements(By.tagName("div"));
+        Assert.assertEquals("Task", obsah_bunky.get(0).getText());
+        bunka = zlozka.get(4).findElements(By.tagName("td"));
+        obsah_bunky = bunka.get(0).findElements(By.tagName("div"));
+        Assert.assertEquals("New", obsah_bunky.get(0).getText());
+        bunka = zlozka.get(5).findElements(By.tagName("td"));
+        obsah_bunky = bunka.get(0).findElements(By.tagName("div"));
+        Assert.assertEquals("Medium", obsah_bunky.get(0).getText());
         }
 
 }
