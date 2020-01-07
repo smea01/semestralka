@@ -14,6 +14,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Unit test for simple App.
@@ -45,26 +49,11 @@ public class Tasks {
     public void novy_task() {
         Metody.prihlasenie(driver);
         Metody.novyProjekt(driver);
+        driver.findElement(By.cssSelector(".btn-primary")).click();
+        WebDriverWait wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_168")));
 
-
-
-
-
-
-        driver.findElement(By.xpath("//a[contains(text(),'smea01')]")).click();
-        driver.findElement(By.cssSelector(".btn-default:nth-child(1)")).click();
-        driver.findElement(By.cssSelector(".btn-default:nth-child(1)")).click();
-
-        WebDriverWait wait = new WebDriverWait(driver, 4);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn-group li:nth-child(2) > a")));
-        driver.findElement(By.cssSelector(".btn-group li:nth-child(2) > a")).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("uniform-delete_confirm")));
-        driver.findElement(By.id("delete_confirm")).click();
-
-        wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn:nth-child(3)")));
-        driver.findElement(By.cssSelector(".btn:nth-child(3)")).click();
-    }
+        
+        }
 
 }
