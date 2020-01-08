@@ -139,7 +139,14 @@ public class Tasks {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
         zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
         Assert.assertTrue(zlozka.size() == 8);
-        
+        //Vymazanie taskov
+        driver.findElement(By.id("select_all_items")).click();
+        driver.findElement(By.cssSelector("[class='btn btn-default dropdown-toggle']")).click();
+        driver.findElement(By.cssSelector("[class='btn btn-default dropdown-toggle']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Delete")));
+        driver.findElement(By.linkText("Delete")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btn-primary-modal-action")));
+        driver.findElement(By.className("btn-primary-modal-action")).click();
 
     }
 
