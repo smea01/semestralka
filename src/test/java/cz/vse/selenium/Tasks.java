@@ -117,7 +117,7 @@ public class Tasks {
         WebDriverWait wait = new WebDriverWait(driver, 2);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
         List<WebElement> zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
-        Assert.assertTrue(zlozka.size() == 4); // 4 protože nadpis je taky řádek
+        Assert.assertTrue(zlozka.size() == 4);
         //Filtre z new na waiting
         driver.findElement(By.className("filters-preview-condition-include")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='chosen-choices'] a")));
@@ -128,7 +128,19 @@ public class Tasks {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
         zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
         Assert.assertTrue(zlozka.size() == 3);
+        //Zmazanie filtrov
+        driver.findElement(By.className("filters-preview-condition-include")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='chosen-choices'] a")));
+        filter = driver.findElements(By.cssSelector("[class='chosen-choices'] a"));
+        filter.get(1).click();
+        filter.get(0).click();
+        driver.findElement(By.className("btn-primary-modal-action")).click();
+        //Zobrazenie 7 taskov
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
+        zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        Assert.assertTrue(zlozka.size() == 8);
         
+
     }
 
 
