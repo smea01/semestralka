@@ -92,4 +92,34 @@ public class Tasks {
         Assert.assertEquals("Medium", obsah_bunky.get(0).getText());
         }
 
+
+    @Test
+    public void nove_tasky_sedem() {
+        Metody.prihlasenie(driver);
+        Metody.novyProjekt(driver);
+        //When
+        for(int i = 0;i<7;i++)
+        {
+            driver.findElement(By.className("btn-primary")).click();
+            WebDriverWait wait = new WebDriverWait(driver, 2);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_168")));
+            WebElement searchInput = driver.findElement(By.id("fields_168"));
+            searchInput.sendKeys("smea01_task");
+            Select select = new Select(driver.findElement(By.id("fields_169")));
+            select.selectByIndex(i);
+            driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
+            driver.findElement(By.tagName("body")).sendKeys("Popis");
+            driver.switchTo().defaultContent();
+            driver.findElement(By.className("btn-primary-modal-action")).click();
+        }
+        //Then
+        //Zobrazenie 3 taskov
+        WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
+        List<WebElement> zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        Assert.assertTrue(zlozka.size() == 4); // 4 protože nadpis je taky řádek
+        
+
+
+
 }

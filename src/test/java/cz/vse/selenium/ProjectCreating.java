@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Unit test for simple App.
  */
-public class Creating_Project {
+public class ProjectCreating {
     private ChromeDriver driver;
     private String url="http://digitalnizena.cz/rukovoditel/index.php?module=users/login";
 
