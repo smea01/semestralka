@@ -118,7 +118,18 @@ public class Tasks {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
         List<WebElement> zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
         Assert.assertTrue(zlozka.size() == 4); // 4 protože nadpis je taky řádek
+        //Filtre z new na waiting
+        driver.findElement(By.className("filters-preview-condition-include")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='chosen-choices'] a")));
+        List<WebElement> filter = driver.findElements(By.cssSelector("[class='chosen-choices'] a"));
+        filter.get(1).click();
+        driver.findElement(By.className("btn-primary-modal-action")).click();
+        //Zobrazenie 2 taskov
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
+        zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        Assert.assertTrue(zlozka.size() == 3);
         
+    }
 
 
 
