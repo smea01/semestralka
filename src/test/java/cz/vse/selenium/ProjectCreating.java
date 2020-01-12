@@ -41,7 +41,9 @@ public class ProjectCreating {
 
     @Test
     public void newProject_failed() {
+        //GIVEN
         Methods.signIn(driver);
+        //WHEN
         driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
         driver.findElement(By.cssSelector(".btn-primary")).click();
         WebDriverWait wait = new WebDriverWait(driver, 2);
@@ -49,20 +51,22 @@ public class ProjectCreating {
         driver.findElement(By.cssSelector(".btn-primary-modal-action")).click();
         wait = new WebDriverWait(driver, 2);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_158-error")));
+        //THEN
         Assert.assertTrue(driver.findElement(By.id("fields_158-error")).isDisplayed());
     }
 
     @Test
     public void newProject_passed() {
+        //GIVEN
         Methods.signIn(driver);
+        //WHEN
         driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
         driver.findElement(By.cssSelector(".btn-primary")).click();
-
         WebDriverWait wait = new WebDriverWait(driver, 4);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_158")));
-
         WebElement searchInput = driver.findElement(By.id("fields_158"));
         searchInput.sendKeys("smea01");
+
         driver.findElement(By.id("fields_156"));
         Select select = new Select(driver.findElement(By.id("fields_156")));
         select.selectByIndex(1);
@@ -77,18 +81,13 @@ public class ProjectCreating {
 
         wait = new WebDriverWait(driver, 4);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn-group li:nth-child(2) > a")));
+        //THEN
         driver.findElement(By.cssSelector(".btn-group li:nth-child(2) > a")).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("uniform-delete_confirm")));
         driver.findElement(By.id("delete_confirm")).click();
-
         wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn:nth-child(3)")));
         driver.findElement(By.cssSelector(".btn:nth-child(3)")).click();
-
-
-
-
     }
-
 }
