@@ -42,8 +42,10 @@ public class Tasks {
 
     @Test
     public void newTask() {
+        //GIVEN
         Methods.signIn(driver);
         Methods.newProject(driver);
+        //WHEN
         driver.findElement(By.cssSelector(".btn-primary")).click();
         WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_168")));
@@ -64,17 +66,15 @@ public class Tasks {
         driver.findElement(By.tagName("body")).sendKeys("description");
         driver.switchTo().defaultContent();
         driver.findElement(By.className("btn-primary-modal-action")).click();
-
+        //THEN
         wait = new WebDriverWait(driver, 1);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
         List<WebElement> component = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
         List<WebElement> tableCell = component.get(1).findElements(By.tagName("td"));
         List<WebElement> contentsCell = tableCell.get(1).findElements(By.tagName("a"));
         contentsCell.get(2).click();
-
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-bordered table-hover table-item-details'] tr")));
         component = driver.findElements(By.cssSelector("[class='table table-bordered table-hover table-item-details'] tr"));
-
         WebElement name = driver.findElement(By.className("caption"));
         Assert.assertEquals("smea01_task", name.getText());
         WebElement description = driver.findElement(By.className("fieldtype_textarea_wysiwyg"));
@@ -95,6 +95,7 @@ public class Tasks {
 
     @Test
     public void newTaskSeven() {
+        //GIVEN
         Methods.signIn(driver);
         Methods.newProject(driver);
         //WHEN
@@ -148,7 +149,4 @@ public class Tasks {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btn-primary-modal-action")));
         driver.findElement(By.className("btn-primary-modal-action")).click();
     }
-
-
-
 }
