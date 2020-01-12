@@ -16,10 +16,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.IOException;
 
 
-public class Metody {
+public class Methods {
     private static String url="http://digitalnizena.cz/rukovoditel/index.php?module=users/login";
 
-    public static void prihlasenie(ChromeDriver driver) {
+    public static void signIn(ChromeDriver driver) {
         driver.get(url);
         WebElement searchInput = driver.findElement(By.name("username"));
         searchInput.sendKeys("rukovoditel");
@@ -28,7 +28,7 @@ public class Metody {
         searchInput.sendKeys(Keys.ENTER);
     }
 
-    public static void novyProjekt(ChromeDriver driver) {
+    public static void newProject(ChromeDriver driver) {
     driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
         driver.findElement(By.cssSelector(".btn-primary")).click();
 

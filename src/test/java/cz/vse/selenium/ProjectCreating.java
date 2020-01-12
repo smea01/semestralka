@@ -32,18 +32,16 @@ public class ProjectCreating {
         cho.addArguments("window-size=1200,1100");
         cho.addArguments("--disable-gpu");
         cho.addArguments("--disable-extensions");
-        //driver = new ChromeDriver(cho);
         driver.manage().window().maximize();
     }
 
     @After
     public void tearDown() {
-//        driver.close();
     }
 
     @Test
-    public void novy_projekt_failed() {
-        Metody.prihlasenie(driver);
+    public void newProject_failed() {
+        Methods.signIn(driver);
         driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
         driver.findElement(By.cssSelector(".btn-primary")).click();
         WebDriverWait wait = new WebDriverWait(driver, 2);
@@ -54,10 +52,9 @@ public class ProjectCreating {
         Assert.assertTrue(driver.findElement(By.id("fields_158-error")).isDisplayed());
     }
 
-
     @Test
-    public void novy_projekt_passed() {
-        Metody.prihlasenie(driver);
+    public void newProject_passed() {
+        Methods.signIn(driver);
         driver.findElement(By.cssSelector("li:nth-child(4) .title:nth-child(2)")).click();
         driver.findElement(By.cssSelector(".btn-primary")).click();
 

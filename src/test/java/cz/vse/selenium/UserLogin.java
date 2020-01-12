@@ -37,43 +37,46 @@ public class UserLogin {
         cho.addArguments("window-size=1200,1100");
         cho.addArguments("--disable-gpu");
         cho.addArguments("--disable-extensions");
-        //driver = new ChromeDriver(cho);
         driver.manage().window().maximize();
     }
 
     @After
     public void tearDown() {
-//        driver.close();
     }
 
     @Test
-    public void prihlasenie_rukovoditel() {
+    public void signIn_rukovoditel() {
+        //GIVEN
         driver.get(url);
+        //WHEN
         WebElement searchInput = driver.findElement(By.name("username"));
         searchInput.sendKeys("rukovoditel");
         searchInput = driver.findElement(By.name("password"));
         searchInput.sendKeys("vse456ru");
         searchInput.sendKeys(Keys.ENTER);
+        //THEN
         Assert.assertTrue(driver.getTitle().startsWith("Rukovoditel | Dashboard"));
         driver.quit();
     }
 
-
     @Test
-    public void prihlasenie_failed_rukovoditel() {
+    public void signIn_failed_rukovoditel() {
+        //GIVEN
         driver.get(url);
+        //WHEN
         WebElement searchInput = driver.findElement(By.name("username"));
         searchInput.sendKeys("Login");
         searchInput = driver.findElement(By.name("password"));
         searchInput.sendKeys("vse456ru");
         searchInput.sendKeys(Keys.ENTER);
+        //THEN
         Assert.assertTrue(!driver.getTitle().startsWith("Rukovoditel | Dashboard"));
         driver.quit();
     }
 
-
     @Test
-    public void odhlasenie_rukovoditel() {
+    public void signOff_rukovoditel() {
+        //GIVEN
         driver.get(url);
         WebElement searchInput = driver.findElement(By.name("username"));
         searchInput.sendKeys("Rukovoditel");
@@ -82,9 +85,11 @@ public class UserLogin {
         searchInput.sendKeys(Keys.ENTER);
         WebDriverWait wait = new WebDriverWait(driver, 2);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa-angle-down")));
+        //WHEN
         driver.findElement(By.cssSelector(".fa-angle-down")).click();
         wait = new WebDriverWait(driver, 2);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Logoff")));
+        //THEN
         driver.findElement(By.linkText("Logoff")).click();
         driver.quit();
 

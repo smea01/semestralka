@@ -41,14 +41,14 @@ public class Tasks {
     }
 
     @Test
-    public void novy_task() {
-        Metody.prihlasenie(driver);
-        Metody.novyProjekt(driver);
+    public void newTask() {
+        Methods.signIn(driver);
+        Methods.newProject(driver);
         driver.findElement(By.cssSelector(".btn-primary")).click();
         WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fields_168")));
 
-        //vstup: nazov, typ, status, priorita, popis
+        //vstup: name, typ, status, priorita, description
         WebElement searchInput = driver.findElement(By.id("fields_168"));
         searchInput.sendKeys("smea01_task");
         driver.findElement(By.id("fields_167"));
@@ -61,43 +61,43 @@ public class Tasks {
         select = new Select(driver.findElement(By.id("fields_170")));
         select.selectByIndex(2);
         driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
-        driver.findElement(By.tagName("body")).sendKeys("Popis");
+        driver.findElement(By.tagName("body")).sendKeys("description");
         driver.switchTo().defaultContent();
         driver.findElement(By.className("btn-primary-modal-action")).click();
 
         wait = new WebDriverWait(driver, 1);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
-        List<WebElement> zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
-        List<WebElement> bunka = zlozka.get(1).findElements(By.tagName("td"));
-        List<WebElement> obsah_bunky = bunka.get(1).findElements(By.tagName("a"));
-        obsah_bunky.get(2).click();
+        List<WebElement> component = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        List<WebElement> tableCell = component.get(1).findElements(By.tagName("td"));
+        List<WebElement> contentsCell = tableCell.get(1).findElements(By.tagName("a"));
+        contentsCell.get(2).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-bordered table-hover table-item-details'] tr")));
-        zlozka = driver.findElements(By.cssSelector("[class='table table-bordered table-hover table-item-details'] tr"));
+        component = driver.findElements(By.cssSelector("[class='table table-bordered table-hover table-item-details'] tr"));
 
-        WebElement nazov = driver.findElement(By.className("caption"));
-        Assert.assertEquals("smea01_task", nazov.getText());
-        WebElement popis = driver.findElement(By.className("fieldtype_textarea_wysiwyg"));
-        Assert.assertEquals("Popis", popis.getText());
+        WebElement name = driver.findElement(By.className("caption"));
+        Assert.assertEquals("smea01_task", name.getText());
+        WebElement description = driver.findElement(By.className("fieldtype_textarea_wysiwyg"));
+        Assert.assertEquals("description", description.getText());
 
         //kontrola typ - Task, status - new, priorita - medium
-        bunka = zlozka.get(3).findElements(By.tagName("td"));
-        obsah_bunky = bunka.get(0).findElements(By.tagName("div"));
-        Assert.assertEquals("Task", obsah_bunky.get(0).getText());
-        bunka = zlozka.get(4).findElements(By.tagName("td"));
-        obsah_bunky = bunka.get(0).findElements(By.tagName("div"));
-        Assert.assertEquals("New", obsah_bunky.get(0).getText());
-        bunka = zlozka.get(5).findElements(By.tagName("td"));
-        obsah_bunky = bunka.get(0).findElements(By.tagName("div"));
-        Assert.assertEquals("Medium", obsah_bunky.get(0).getText());
+        tableCell = component.get(3).findElements(By.tagName("td"));
+        contentsCell = tableCell.get(0).findElements(By.tagName("div"));
+        Assert.assertEquals("Task", contentsCell.get(0).getText());
+        tableCell = component.get(4).findElements(By.tagName("td"));
+        contentsCell = tableCell.get(0).findElements(By.tagName("div"));
+        Assert.assertEquals("New", contentsCell.get(0).getText());
+        tableCell = component.get(5).findElements(By.tagName("td"));
+        contentsCell = tableCell.get(0).findElements(By.tagName("div"));
+        Assert.assertEquals("Medium", contentsCell.get(0).getText());
         }
 
 
     @Test
-    public void nove_tasky_sedem() {
-        Metody.prihlasenie(driver);
-        Metody.novyProjekt(driver);
-        //When
+    public void newTaskSeven() {
+        Methods.signIn(driver);
+        Methods.newProject(driver);
+        //WHEN
         for(int i = 0;i<7;i++)
         {
             driver.findElement(By.className("btn-primary")).click();
@@ -108,16 +108,16 @@ public class Tasks {
             Select select = new Select(driver.findElement(By.id("fields_169")));
             select.selectByIndex(i);
             driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
-            driver.findElement(By.tagName("body")).sendKeys("Popis");
+            driver.findElement(By.tagName("body")).sendKeys("description");
             driver.switchTo().defaultContent();
             driver.findElement(By.className("btn-primary-modal-action")).click();
         }
-        //Then
+        //THEN
         //Zobrazenie 3 taskov
         WebDriverWait wait = new WebDriverWait(driver, 2);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
-        List<WebElement> zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
-        Assert.assertTrue(zlozka.size() == 4);
+        List<WebElement> component = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        Assert.assertTrue(component.size() == 4);
         //Filtre z new na waiting
         driver.findElement(By.className("filters-preview-condition-include")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='chosen-choices'] a")));
@@ -126,8 +126,8 @@ public class Tasks {
         driver.findElement(By.className("btn-primary-modal-action")).click();
         //Zobrazenie 2 taskov
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
-        zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
-        Assert.assertTrue(zlozka.size() == 3);
+        component = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        Assert.assertTrue(component.size() == 3);
         //Zmazanie filtrov
         driver.findElement(By.className("filters-preview-condition-include")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='chosen-choices'] a")));
@@ -137,8 +137,8 @@ public class Tasks {
         driver.findElement(By.className("btn-primary-modal-action")).click();
         //Zobrazenie 7 taskov
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr")));
-        zlozka = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
-        Assert.assertTrue(zlozka.size() == 8);
+        component = driver.findElements(By.cssSelector("[class='table table-striped table-bordered table-hover'] tr"));
+        Assert.assertTrue(component.size() == 8);
         //Vymazanie taskov
         driver.findElement(By.id("select_all_items")).click();
         driver.findElement(By.cssSelector("[class='btn btn-default dropdown-toggle']")).click();
@@ -147,7 +147,6 @@ public class Tasks {
         driver.findElement(By.linkText("Delete")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btn-primary-modal-action")));
         driver.findElement(By.className("btn-primary-modal-action")).click();
-
     }
 
 
