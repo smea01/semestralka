@@ -23,6 +23,7 @@ import java.util.UUID;
 /**
  * Unit test for simple App.
  */
+
 public class UserLogin {
     private ChromeDriver driver;
     private String url="http://digitalnizena.cz/rukovoditel/index.php?module=users/login";
